@@ -1,8 +1,6 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
 import lib.Platform;
-import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class MyListsPageObject extends MainPageObject
@@ -55,11 +53,11 @@ abstract public class MyListsPageObject extends MainPageObject
         //            5
         //);
         if (Platform.getInstance().isAndroid()){
-            this.swipefElementToLeft(
-                    ARTICLE_BY_TITLE_TPL,
-                    "23"
-            );
-        } else {
+         //   this.swipefElementToLeft(
+        //            ARTICLE_BY_TITLE_TPL,
+        //            "23"
+        //    );
+       // } else {
             String remove_locator = getRemoveButtonBytitle(article_title);
             this.waitForElementAndClick(
                     remove_locator,

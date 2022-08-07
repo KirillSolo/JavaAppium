@@ -1,8 +1,7 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
+import io.qameta.allure.Step;
 import lib.Platform;
-import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 abstract public class SearchPageObject extends MainPageObject {
@@ -23,15 +22,17 @@ abstract public class SearchPageObject extends MainPageObject {
     }
 
     /*TEMLATES METHODS*/
+    @Step("Initializing the search field 1")
     public void initSearchInput() {
         this.waitForElementPresent(SEARCH_INIT_ELEMENT, "Cannot find search input after clicking search init element", 5);
         this.waitForElementAndClick(SEARCH_INIT_ELEMENT, "Cannot find and click search init element", 5);
     }
+    @Step("Initializing the search field 2")
     public void initSearchInput2() {
         this.waitForElementPresent(SEARCH_INIT_ELEMENT_2, "Cannot find search input after clicking search init element", 5);
         this.waitForElementAndClick(SEARCH_INIT_ELEMENT_2, "Cannot find and click search init element", 5);
     }
-
+    @Step("Click to Java")
     public void clickJava() {
         this.waitForElementAndClick("xpath://html/body/div[3]/div/div[2]/div/div[3]/div/ul/li[3]/a/div[2]", "Cannot find and click search init element", 5);
     }
@@ -53,7 +54,7 @@ abstract public class SearchPageObject extends MainPageObject {
 
         //SEARCH_INPUT
     }
-
+@Step("Waiting for search result and select an article by substring in article title")
     public void clickByArticleWithSubstring(String substring) {
         this.waitForElementAndClick("xpath:/html/body/div[3]/div/div[2]/div/div[3]/div/ul/li[1]/a[1]/div[2]", "Cannot find and click search init element", 5);
     }
@@ -63,6 +64,7 @@ abstract public class SearchPageObject extends MainPageObject {
         String search_result_xpath = getResultSearchElement(substring);
         this.waitForElementPresent(search_result_xpath,"Cannot find search result with substryng"+ substring,3);
     }
+    @Step("Return to the mobile version of the Wikipedia site")
     public void openWikiWebPage()
     {
         if (Platform.getInstance().isMW()){

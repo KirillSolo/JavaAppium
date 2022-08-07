@@ -1,20 +1,29 @@
 package Tests;
 
-import lib.Platform;
-import lib.ui.*;
-import lib.ui.factories.*;
+import io.qameta.allure.*;
+import io.qameta.allure.junit4.DisplayName;
 import lib.CoreTestCase;
+import lib.ui.*;
+import lib.ui.factories.ArticlePageObjectFactory;
+import lib.ui.factories.MyListsPageObjectFactory;
+import lib.ui.factories.NavigationUIFactory;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
+@Epic("Tests for MyLists")
 public class MyListsTests extends CoreTestCase
 {
     private  static final String name_of_folder="Learning programming";
     private static final String login="Kirill13131";
     private static final String password="Smailik987";
     @Test
+    @DisplayName("Deleting one of the added articles")
+    @Description("Adds two articles to favorites and then removes one of them")
+    @Step("Starting test testEx5")
+    @Severity(value = SeverityLevel.BLOCKER)
     public void testEx5() {
         SearchPageObject SerchPageObject = SearchPageObjectFactory.get(driver);
         ArticlePageObject ArticlePageObject = ArticlePageObjectFactory.get(driver);

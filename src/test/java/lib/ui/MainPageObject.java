@@ -1,16 +1,20 @@
 package lib.ui;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.TouchAction;
-import lib.Platform;
+import io.qameta.allure.Attachment;
+import org.aspectj.util.FileUtil;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -36,10 +40,9 @@ public class MainPageObject {
         By by =this.getLocatorString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
-        return wait.until(
-               ExpectedConditions.presenceOfElementLocated(by)
+        return (WebElement) wait.until(ExpectedConditions.presenceOfElementLocated(by));
                 //ExpectedConditions.elementToBeClickable(by)
-        );
+
     }
  //   public WebElement waitForElementPresent(By by)
  //   {
@@ -85,7 +88,7 @@ public class MainPageObject {
         return element;
     }
 
-    public void swipeUp (int timeOfSwipe)
+    /*public void swipeUp (int timeOfSwipe)
     {
         if (driver instanceof AppiumDriver) {
             TouchAction action = new TouchAction((AppiumDriver) driver);
@@ -128,7 +131,7 @@ public class MainPageObject {
         } else {
             System.out.println("Method swipeUp() do nothing for platform" + Platform.getInstance().getPlatformVar());
         }
-    }
+    }*/
     private By getLocatorString(String locator_with_type)
     {
         String[] exploded_locator = locator_with_type.split(Pattern.quote(":"),2);
@@ -170,4 +173,27 @@ public class MainPageObject {
         }
         ++current_attempts;
     }
+    public String takeScreenshot(String name)
+    {
+        TakesScreenshot ts =(TakesScreenshot)this.driver;
+        File source =ts.getScreenshotAs(OutputType.FILE);
+        String path =System.getProperty("user.dir") +"/"+ name + "_screenshot.png";
+        try {
+            FileUtil.copyFile(source, new File(path));
+            System.out.println("The screenshot was taken" + path);
+        }catch (Exception e){
+            System.out.println("Cannot take screenshot. Error:" + e.getMessage());
+        }
+        return path;
+    }
+    @Attachment
+    public static byte[] screnschoot (String path){
+        byte[] bytes =new byte[0];
+        try {
+                bytes = Files.readAllBytes(Paths.get(path));
+            } catch (IOException e){
+                System.out.println("Cannot get bytes from screenshot. Error: " + e.getMessage());
+            }
+            return bytes;
+        }
 }
